@@ -72,9 +72,13 @@
             #errors li {
                 color: red;
             }
-        </style>
 
-        <title>{{ $title ?? '🍂 BookLeaf: Simple Bookmarks' }}</title>
+
+        </style>
+        @if(isset($styles))
+            {{ $styles }}
+        @endif
+        <title>{{ '🍂 BookLeaf: ' . $title ?? 'Simple Bookmarks' }}</title>
     </head>
     <body class="">
         {{ $slot }}
