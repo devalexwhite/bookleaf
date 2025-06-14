@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookmarkController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -26,3 +27,5 @@ Route::get('/dashboard', fn () => view('app.dashboard'))->name('dashboard')->mid
 
 Route::resource('users', UserController::class)->only(['store']);
 Route::post('login', [UserController::class, 'login'])->name('users.login');
+
+Route::resource('bookmarks', BookmarkController::class)->only(['create', 'store', 'index'])->middleware('auth');

@@ -1,10 +1,4 @@
 <x-layout>
-    <header>
-        <h1>New Bookmark</h1>
-        <div id="actions">
-            <a href="{{ route('dashboard') }}">Back</a>
-        </div>
-    </header>
      @if ($errors->any())
         <div id="errors">
             <h5>Validation Errors</h5>

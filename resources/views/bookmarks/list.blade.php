@@ -50,12 +50,6 @@
             }
         </style>
     </x-slot:styles>
-    <header>
-        <h1>Your Bookmarks</h1>
-        <div id="actions">
-            <a href="{{ route('dashboard') }}">Dashboard</a>
-        </div>
-    </header>
     <main>
         <ul id="bookmark-list">
             @foreach ($bookmarks as $bookmark)
