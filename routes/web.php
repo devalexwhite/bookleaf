@@ -28,4 +28,4 @@ Route::get('/dashboard', fn () => view('app.dashboard'))->name('dashboard')->mid
 Route::resource('users', UserController::class)->only(['store']);
 Route::post('login', [UserController::class, 'login'])->name('users.login');
 
-Route::resource('bookmarks', BookmarkController::class)->only(['create', 'store', 'index'])->middleware('auth');
+Route::resource('bookmarks', BookmarkController::class)->only(['create', 'store', 'index', 'destroy'])->middleware('auth');

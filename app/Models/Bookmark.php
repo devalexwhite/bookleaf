@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Spekulatius\PHPScraper\PHPScraper;
 
@@ -37,13 +38,17 @@ class Bookmark extends Model
     public function fillMetaTags()
     {
         $web = new PHPScraper;
-        $meta = $web->go($this->url);
 
-        $this->name = $meta->title ?? '';
-        $this->description = $meta->description ?? '';
-        $this->author = $meta->author ?? '';
-        $this->image_url = $meta->image ?? '';
-        $this->save();
+        try {
+            $meta = $web->go($this->url);
+
+            $this->name = $meta->title ?? '';
+            $this->description = $meta->description ?? '';
+            $this->author = $meta->author ?? '';
+            $this->image_url = $meta->image ?? '';
+            $this->save();
+        }
+        catch (Exception $e) {}
     }
 
     public static function getAllTags(): array

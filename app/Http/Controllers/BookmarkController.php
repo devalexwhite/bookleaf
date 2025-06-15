@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBookmarkRequest;
+use App\Models\Bookmark;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,6 +12,15 @@ class BookmarkController extends Controller
     public function create()
     {
         return view('bookmarks.create');
+    }
+
+    public function destroy(Bookmark $bookmark)
+    {
+        if ($bookmark->user_id == Auth::user()->id) {
+            $bookmark->delete();
+        }
+
+        return redirect(route('bookmarks.index'));
     }
 
     public function store(StoreBookmarkRequest $request)

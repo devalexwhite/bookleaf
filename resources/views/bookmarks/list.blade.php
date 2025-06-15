@@ -70,6 +70,11 @@
                     <h3 class="bookmark-title" style="margin:0;font-size: 1rem;padding:0;font-weight: 500;">🔗 {{ $bookmark->name ?? $bookmark->url}}</h3>
                     <p class="bookmark-description" style="margin: 0;font-size: 1rem;font-weight: 200;">{{ $bookmark->notes ?? $bookmark->description }}</p>
                 </a>
+                <form method="POST"  action="{{ route('bookmarks.destroy', ['bookmark' => $bookmark]) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" style="margin: 0;background: red;border:none;color:white;">Delete</button>
+                </form>
             </li>
         @endforeach
     </ul>
