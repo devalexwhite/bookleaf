@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Create Bookmark">
      @if ($errors->any())
         <div id="errors">
             <h5>Validation Errors</h5>
@@ -9,6 +9,7 @@
             </ul>
         </div>
     @endif
+
     <form method="POST" action="{{ route('bookmarks.store') }}">
         @csrf
         <label>
@@ -31,6 +32,10 @@
             <p>Description</p>
             <textarea name="description" rows="4" cols="80"></textarea>
         </label>
-        <button type="submit">Save</button>
+        <div style="margin-top: 1rem;">
+            <button type="submit" class="button">Save</button>
+            <a href="{{ route('bookmarks.index') }}" class="button">Back</a>
+        </div>
+
     </form>
 </x-layout>

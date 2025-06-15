@@ -8,6 +8,7 @@
 
             ul#bookmark-list > li {
                 border-bottom: 1px solid white;
+                margin-top: 1rem;
             }
 
             ul#bookmark-list > li:last-child {
@@ -16,7 +17,7 @@
 
             ul#bookmark-list > li a {
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
                 text-decoration: none;
             }
 
@@ -50,24 +51,22 @@
             }
         </style>
     </x-slot:styles>
-    <main>
-        <ul id="bookmark-list">
-            @foreach ($bookmarks as $bookmark)
-                <li>
-                   <a href="{{ $bookmark->url }}">
-                        <ul class="tag-list">
-                            @foreach($bookmark->tagsArray() as $tag)
-                                <li><a href="#">{{$tag}}</a></li>
-                            @endforeach
-                        </ul>
-                        <h3 class="bookmark-title">{{ $bookmark->name ?? $bookmark->url}}</h3>
-                        @if($bookmark->tags)
-
-                        @endif
-                        <p class="bookmark-description">{{ $bookmark->description }}</p>
-                    </a>
-                </li>
-            @endforeach
-        </ul>
-    </main>
+    <div class="page-action">
+        <a class="button" href="{{ route('bookmarks.create') }}">New Bookmark</a>
+    </div>
+    <ul id="bookmark-list">
+        @foreach ($bookmarks as $bookmark)
+            <li>
+                <ul class="tag-list">
+                    @foreach($bookmark->tagsArray() as $tag)
+                        <li><a href="#">{{$tag}}</a></li>
+                    @endforeach
+                </ul>
+                <a href="{{ $bookmark->url }}" target="_blank">
+                    <h3 class="bookmark-title">{{ $bookmark->name ?? $bookmark->url}}</h3>
+                    <p class="bookmark-description">{{ $bookmark->description }}</p>
+                </a>
+            </li>
+        @endforeach
+    </ul>
 </x-layout>

@@ -3,7 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link
+        rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍂</text></svg>"
+        />
         <style>
             body {
                 font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, Adwaita Sans, Cantarell, Ubuntu, roboto, noto, helvetica, arial, sans-serif;
@@ -20,8 +23,8 @@
             }
 
             header {
+                margin: 1.5rem 0;
                 padding: 0.5rem;
-
             }
 
             main {
@@ -68,10 +71,6 @@
                 color: white;
             }
 
-            header {
-                margin: 3rem 0;
-            }
-
             #actions {
                 display: flex;
                 flex-direction: row;
@@ -99,12 +98,33 @@
                 color: red;
             }
 
+            .button {
+                margin-right: 0.5rem;
+                font-size: 1.25rem;
+                font-weight: 400;
+                border-radius: 5px;
+                text-decoration: none;
+                background-color: #EEEEEE;
+                color: #333333;
+                padding: 2px 6px 2px 6px;
+                border-top: 1px solid #CCCCCC;
+                border-right: 1px solid #333333;
+                border-bottom: 1px solid #333333;
+                border-left: 1px solid #CCCCCC;
+                transition: all 0.3s;
+                margin-top: 0px;
+            }
 
+            .button:hover {
+                text-decoration: none;
+                background-color: #a0a0a0;
+                cursor: pointer;
+            }
         </style>
         @if(isset($styles))
             {{ $styles }}
         @endif
-        <title>{{ '🍂 BookLeaf: ' . (isset($title) ? $title : 'Simple Bookmarks') }}</title>
+        <title>{{ 'BookLeaf: ' . (isset($title) ? $title : 'Simple Bookmarks') }}</title>
     </head>
     <body class="">
         <header>
