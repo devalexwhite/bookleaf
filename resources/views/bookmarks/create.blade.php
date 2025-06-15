@@ -17,20 +17,16 @@
             <input type="url" name="url" placeholder="https://bookleaf.dev" />
         </label>
         <label>
+            <p>Folder</p>
+            <input type="text" name="folder" placeholder="blogs" />
+        </label>
+        <label>
             <p>Tags</p>
             <input type="text" name="tags" placeholder="tag1,tag2" />
         </label>
         <label>
-            <p>Name</p>
-            <input type="text" name="name" placeholder="BookLeaf"/>
-        </label>
-        <label>
-            <p>Author</p>
-            <input type="text" name="author" placeholder="Bob Builder"/>
-        </label>
-        <label>
-            <p>Description</p>
-            <textarea name="description" rows="4" cols="80"></textarea>
+            <p>Your Notes</p>
+            <textarea name="notes" rows="4" cols="80"></textarea>
         </label>
         <div style="margin-top: 1rem;">
             <button type="submit" class="button">Save</button>

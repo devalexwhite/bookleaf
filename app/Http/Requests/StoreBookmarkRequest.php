@@ -24,10 +24,9 @@ class StoreBookmarkRequest extends FormRequest
     {
         return [
             'url' => 'required|max:1024|url:http,https',
-            'name' => 'max:2048',
-            'description' => 'max:1024',
-            'author' => 'max:255',
+            'notes' => 'max:1024',
             'tags' => 'max:1024',
+            'folder' => 'max:100',
         ];
     }
 }

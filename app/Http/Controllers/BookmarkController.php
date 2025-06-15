@@ -19,7 +19,7 @@ class BookmarkController extends Controller
 
         Auth::user()->bookmarks()->create($validated);
 
-        return redirect(route('dashboard'));
+        return redirect(route('bookmarks.index'));
     }
 
     public function index()

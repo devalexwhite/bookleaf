@@ -148,7 +148,6 @@
                     <a href="{{ route('login') }}">Login</a>
                 @endguest
                 @auth
-                    <a href="{{ route('dashboard') }}">Dashboard</a>
                     <a href="{{ route('bookmarks.index') }}">Bookmarks</a>
                     <a href="{{ route('logout') }}">Logout</a>
                 @endauth
@@ -158,7 +157,7 @@
             {{ $slot }}
         </main>
         <footer>
-            Made by Alex White in Ohio on Linux.
+            Made by <a href="https://thatalexguy.dev" style="text-decoration: underline;" target="_blank">Alex White</a> in Ohio on 🐧
         </footer>
     </body>
 </html>
