@@ -46,7 +46,7 @@
         <a class="button" href="{{ route('bookmarks.create') }}">New Bookmark</a>
     </div>
     <div style="display: flex;flex-direction: row; gap: 3rem;margin-top: 2rem;">
-        <div style="">
+        <div style="min-width: 150px;">
             <h4>Folders</h4>
             <a href="{{ route('bookmarks.index') }}" style="margin-bottom: 1rem;display: block;">All Bookmarks</a>
             <ul id="folders-list">
