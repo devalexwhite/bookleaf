@@ -13,8 +13,8 @@
                 /* background: #1e1c34;
                 * color: white;
                 */
-                background-color: #004604;
-                color: white;
+                background-color: #ffddae;
+                color: black;
                 max-width: 600px;
                 margin: 0rem auto;
                 display: flex;
@@ -78,7 +78,7 @@
             }
 
             a {
-                color: white;
+                color: black;
             }
 
             #actions {

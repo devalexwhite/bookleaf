@@ -17,15 +17,30 @@ class BookmarkController extends Controller
     {
         $validated = $request->validated();
 
-        Auth::user()->bookmarks()->create($validated);
+        $bookmark = Auth::user()->bookmarks()->create($validated);
+        $bookmark->fillMetaTags();
 
         return redirect(route('bookmarks.index'));
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $folder = urldecode($request->query('folder'));
+        $tag = urldecode($request->query('tag'));
+
+
+        $query = Auth::user()->bookmarks();
+
+        if ($folder != null) {
+            $query = $query->where('folder', $folder);
+        }
+
+        if ($tag != null) {
+            $query = $query->where('tags', 'LIKE', '%' . $tag . '%');
+        }
+
         return view('bookmarks.list', [
-            'bookmarks' => Auth::user()->bookmarks,
+            'bookmarks' => $query->get(),
         ]);
     }
 }

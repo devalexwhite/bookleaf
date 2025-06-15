@@ -7,7 +7,8 @@
             }
 
             ul#bookmark-list > li {
-                border-bottom: 1px solid white;
+                padding-bottom: 1rem;
+                border-bottom: 1px solid gray;
                 margin-top: 1rem;
             }
 
@@ -39,34 +40,38 @@
             ul#bookmark-list .tag-list li a:hover {
                 text-decoration: underline;
             }
-
-            p.bookmark-description {
-                font-weight: light;
-                margin-top: 0px;
-                color: #c7c7c7;
-            }
-
-            h3.bookmark-title {
-                margin: 0.2rem 0;
-            }
         </style>
     </x-slot:styles>
     <div class="page-action">
         <a class="button" href="{{ route('bookmarks.create') }}">New Bookmark</a>
     </div>
-    <ul id="bookmark-list">
+    <div style="display: flex;flex-direction: row; gap: 3rem;margin-top: 2rem;">
+        <div style="">
+            <h4>Folders</h4>
+            <a href="{{ route('bookmarks.index') }}" style="margin-bottom: 1rem;display: block;">All Bookmarks</a>
+            <ul id="folders-list">
+                @foreach(App\Models\Bookmark::getAllFolders() as $folder)
+                    <details>
+                        <summary>{{ $folder }}</summary>
+                        <ul>
+                            <li><a href="{{ route('bookmarks.index', ['folder' => urlencode($folder)]) }}">All</a></li>
+                            @foreach(App\Models\Bookmark::getTagsForFolder($folder) as $tag)
+                                <li><a href="{{ route('bookmarks.index', ['folder' => urlencode($folder), 'tag' => urlencode($tag)]) }}">{{ $tag }}</a></li>
+                            @endforeach
+                        </ul>
+                    </details>
+                @endforeach
+            </ul>
+        </div>
+        <ul id="bookmark-list">
         @foreach ($bookmarks as $bookmark)
             <li>
-                <ul class="tag-list">
-                    @foreach($bookmark->tagsArray() as $tag)
-                        <li><a href="#">{{$tag}}</a></li>
-                    @endforeach
-                </ul>
                 <a href="{{ $bookmark->url }}" target="_blank">
-                    <h3 class="bookmark-title">{{ $bookmark->name ?? $bookmark->url}}</h3>
-                    <p class="bookmark-description">{{ $bookmark->description }}</p>
+                    <h3 class="bookmark-title" style="margin:0;font-size: 1rem;padding:0;font-weight: 500;">🔗 {{ $bookmark->name ?? $bookmark->url}}</h3>
+                    <p class="bookmark-description" style="margin: 0;font-size: 1rem;font-weight: 200;">{{ $bookmark->notes ?? $bookmark->description }}</p>
                 </a>
             </li>
         @endforeach
     </ul>
+    </div>
 </x-layout>
