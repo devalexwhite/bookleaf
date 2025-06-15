@@ -23,13 +23,22 @@
             }
 
             header {
-                margin: 1.5rem 0;
-                padding: 0.5rem;
+                margin: .5rem 0 0 0;
+                padding: 0 0.5rem;
+            }
+
+            header::after {
+                content: '';
+                display: block;
+                width: 300px;
+                height: 1px;
+                margin: 2rem 0;
+                background-color: #bababa;
             }
 
             main {
                 flex-grow: 1;
-                padding: 0.5rem;
+                padding: 0 0.5rem;
             }
 
             footer {
@@ -55,6 +64,7 @@
                 font-size: 1.15rem;
                 font-weight: 500;
                 line-height: 150%;
+                margin-top: 0;
             }
 
             ul {
