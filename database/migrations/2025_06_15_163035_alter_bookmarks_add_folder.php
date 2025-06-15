@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('bookmarks', function (Blueprint $table) {
-            $table->string('folder')->index()->unique()->nullable();
+            $table->string('folder')->index()->nullable();
             $table->text('notes')->nullable();
             $table->string('favicon_url')->nullable();
             $table->string('image_url')->nullable();
