@@ -40,6 +40,14 @@
             ul#bookmark-list .tag-list li a:hover {
                 text-decoration: underline;
             }
+
+            .bookmark-li .bookmark-delete {
+                display: none;
+            }
+
+            .bookmark-li:hover .bookmark-delete {
+                display: block;
+            }
         </style>
     </x-slot:styles>
     <div class="page-action">
@@ -65,7 +73,7 @@
         </div>
         <ul id="bookmark-list">
         @foreach ($bookmarks as $bookmark)
-            <li>
+            <li class="bookmark-li">
                 <a href="{{ $bookmark->url }}" target="_blank">
                     <h3 class="bookmark-title" style="margin:0;font-size: 1rem;padding:0;font-weight: 500;">🔗 {{ $bookmark->name ?? $bookmark->url}}</h3>
                     <p class="bookmark-description" style="margin: 0;font-size: 1rem;font-weight: 200;">{{ $bookmark->notes ?? $bookmark->description }}</p>
@@ -73,7 +81,7 @@
                 <form method="POST"  action="{{ route('bookmarks.destroy', ['bookmark' => $bookmark]) }}">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" style="margin: 0;background: red;border:none;color:white;">Delete</button>
+                    <button class="bookmark-delete" type="submit" style="margin: 0;background: red;border:none;color:white;">Delete</button>
                 </form>
             </li>
         @endforeach
