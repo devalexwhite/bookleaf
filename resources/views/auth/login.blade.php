@@ -1,12 +1,4 @@
-<x-layout>
-    <header>
-        <h1>Welcome back!</h1>
-        <div id="actions">
-            <a href="/">Home</a>
-            <a href="{{ route('signup') }}">Need an account?</a>
-        </div>
-    </header>
-    <main>
+<x-layout title="Welcome Back!">
     @if ($errors->any())
         <div id="errors">
             <h5>Validation Errors</h5>
@@ -27,8 +19,6 @@
             <p>Password</p>
             <input type="password" name="password" placeholder="*******">
         </label>
-        <button type="submit">Login</button>
+        <button type="submit" class="button" style="margin-top: 1rem;">Login</button>
     </form>
-
-    </main>
 </x-layout>

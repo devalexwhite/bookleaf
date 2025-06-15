@@ -1,12 +1,4 @@
-<x-layout>
-    <header>
-        <h1>Welcome to 🍂 BookLeaf</h1>
-        <div id="actions">
-            <a href="/">Home</a>
-            <a href="{{ route('login') }}">Already have an account?</a>
-        </div>
-    </header>
-    <main>
+<x-layout title="Welcome to 🍂 BookLeaf">
     @if ($errors->any())
         <div id="errors">
             <h5>Validation Errors</h5>
@@ -22,7 +14,7 @@
         <label>
             <p>Email address</p>
             <input type="email" name="email" placeholder="you@email.com"></label>
-        </label>
+        </button>
         <label>
             <p>Password</p>
             <input type="password" name="password" placeholder="*******"></label>
@@ -31,8 +23,6 @@
             <p>Confirm Password </p>
             <input type="password" name="confirm_password" placeholder="*******"></label>
         </label>
-        <button type="submit">Create account</button>
+        <button type="submit" class="button" style="margin-top: 1rem;">Create account</button>
     </form>
-
-    </main>
 </x-layout>
