@@ -75,7 +75,10 @@
         @foreach ($bookmarks as $bookmark)
             <li class="bookmark-li">
                 <a href="{{ $bookmark->url }}" target="_blank">
-                    <h3 class="bookmark-title" style="margin:0;font-size: 1rem;padding:0;font-weight: 500;">🔗 {{ $bookmark->name ?? $bookmark->url}}</h3>
+                    <div style="display: flex;flex-direction: row;gap: 0.25rem;align-items: center;">
+                        <img src="http://www.google.com/s2/favicons?domain={{ urlencode($bookmark->url) }}" width="16" height="16" loading="lazy" />
+                        <h3 class="bookmark-title" style="margin:0;font-size: 1rem;padding:0;font-weight: 500;">{{ $bookmark->name ?? $bookmark->url}}</h3>
+                    </div>
                     <p class="bookmark-description" style="margin: 0;font-size: 1rem;font-weight: 200;">{{ $bookmark->notes ?? $bookmark->description }}</p>
                 </a>
                 <form method="POST"  action="{{ route('bookmarks.destroy', ['bookmark' => $bookmark]) }}">
