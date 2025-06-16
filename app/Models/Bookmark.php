@@ -65,14 +65,18 @@ class Bookmark extends Model
     public function toCSVRow(): string
     {
         $data = [
-            ($this->name ?? ''),
-            ($this->url),
-            ($this->notes ?? ''),
-            ($this->tags ? '"' . $this->tags . '"' : ''),
-            ($this->folder ?? ''),
+            ($this->name ? $this->quoteString($this->name) : ''),
+            ($this->url ? $this->quoteString($this->url) : ''),
+            ($this->notes ? $this->quoteString($this->notes) : ''),
+            ($this->tags ? $this->quoteString($this->tags) : ''),
+            ($this->folder ? $this->quoteString($this->folder) : ''),
         ];
 
         return implode(',', $data);
+    }
+
+    private function quoteString($string) {
+        return '"' . $string . '"';
     }
 
     public static function getCSVColumnHeaders(): string
