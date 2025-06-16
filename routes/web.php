@@ -29,3 +29,4 @@ Route::resource('users', UserController::class)->only(['store']);
 Route::post('login', [UserController::class, 'login'])->name('users.login');
 
 Route::resource('bookmarks', BookmarkController::class)->only(['create', 'store', 'index', 'destroy'])->middleware('auth');
+Route::get('bookmarks/export', [BookmarkController::class, 'export'])->name('bookmarks.export')->middleware('auth');

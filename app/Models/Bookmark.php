@@ -61,4 +61,28 @@ class Bookmark extends Model
     {
         return Auth::user()->bookmarks()->select('tags')->where('folder', $folder)->whereNotNull('tags')->get()->pluck('tags')->map(fn ($tag) => explode(',', $tag))->flatten()->unique()->toArray();
     }
+
+    public function toCSVRow(): string
+    {
+        $data = [
+            ($this->name ?? ''),
+            ($this->url),
+            ($this->notes ?? ''),
+            ($this->tags ? '"' . $this->tags . '"' : ''),
+            ($this->folder ?? ''),
+        ];
+
+        return implode(',', $data);
+    }
+
+    public static function getCSVColumnHeaders(): string
+    {
+        return implode(',', [
+            'name',
+            'url',
+            'notes',
+            'tags',
+            'folder'
+        ]);
+    }
 }

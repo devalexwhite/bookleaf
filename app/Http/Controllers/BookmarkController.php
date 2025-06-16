@@ -53,4 +53,19 @@ class BookmarkController extends Controller
             'bookmarks' => $query->get(),
         ]);
     }
+
+    public function export()
+    {
+        $bookmarks = Auth::user()->bookmarks;
+
+        $output = Bookmark::getCSVColumnHeaders() . "\r\n";
+
+        foreach ($bookmarks as $bookmark) {
+            $output .= $bookmark->toCSVRow() . "\r\n";
+        }
+
+        return response($output)
+            ->header('Content-Type', 'text/csv')
+            ->header('Content-Disposition', 'attachment; filename="bookmark_export.csv"');
+    }
 }

@@ -130,6 +130,7 @@
                 background-color: #a0a0a0;
                 cursor: pointer;
             }
+
         </style>
         @if(isset($styles))
             {{ $styles }}
