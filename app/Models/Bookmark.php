@@ -33,7 +33,7 @@ class Bookmark extends Model
 
     public static function getAllFolders(): array
     {
-        return Bookmark::select('folder')->get()->pluck('folder')->unique()->toArray();
+        return Auth::user()->bookmarks()->select('folder')->get()->pluck('folder')->unique()->toArray();
     }
 
     public function fillMetaTags()
@@ -54,7 +54,7 @@ class Bookmark extends Model
 
     public static function getAllTags(): array
     {
-        return Auth::user()->bookmarks()->select('tags')->where('user_id', Auth)->get()->pluck('tags')->map(fn ($tag) => explode(',', $tag))->flatten()->unique()->toArray();
+        return Auth::user()->bookmarks()->select('tags')->get()->pluck('tags')->map(fn ($tag) => explode(',', $tag))->flatten()->unique()->toArray();
     }
 
     public static function getTagsForFolder($folder): array
