@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Spekulatius\PHPScraper\PHPScraper;
 
 class Bookmark extends Model
@@ -53,11 +54,11 @@ class Bookmark extends Model
 
     public static function getAllTags(): array
     {
-        return Bookmark::select('tags')->get()->pluck('tags')->map(fn ($tag) => explode(',', $tag))->flatten()->unique()->toArray();
+        return Auth::user()->bookmarks()->select('tags')->where('user_id', Auth)->get()->pluck('tags')->map(fn ($tag) => explode(',', $tag))->flatten()->unique()->toArray();
     }
 
     public static function getTagsForFolder($folder): array
     {
-        return Bookmark::select('tags')->where('folder', $folder)->whereNotNull('tags')->get()->pluck('tags')->map(fn ($tag) => explode(',', $tag))->flatten()->unique()->toArray();
+        return Auth::user()->bookmarks()->select('tags')->where('folder', $folder)->whereNotNull('tags')->get()->pluck('tags')->map(fn ($tag) => explode(',', $tag))->flatten()->unique()->toArray();
     }
 }
