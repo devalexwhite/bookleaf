@@ -159,6 +159,9 @@
         </main>
         <footer>
             Made by <a href="https://thatalexguy.dev" style="text-decoration: underline;" target="_blank">Alex White</a> in Ohio on 🐧
+            <ul style="list-style: none; margin: 0; padding: 0;">
+                <li><a style="color: purple;" href="{{ route('changelog') }}">Changelog</a></li>
+            </ul>
         </footer>
     </body>
 </html>

@@ -24,6 +24,7 @@ Route::get('/logout', function () {
 
 Route::get('/dashboard', fn () => view('app.dashboard'))->name('dashboard')->middleware('auth');
 
+Route::get('/changelog', fn () => view('app.changelog'))->name('changelog');
 
 Route::resource('users', UserController::class)->only(['store']);
 Route::post('login', [UserController::class, 'login'])->name('users.login');
