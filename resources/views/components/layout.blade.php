@@ -15,7 +15,7 @@
                 */
                 background-color: #ffddae;
                 color: black;
-                max-width: 600px;
+                max-width: 800px;
                 margin: 0rem auto;
                 display: flex;
                 flex-direction: column;

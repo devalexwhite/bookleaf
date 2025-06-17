@@ -50,7 +50,7 @@
             }
         </style>
     </x-slot:styles>
-    <div class="page-action">
+    <div style="display: flex;flex-direction: row;align-items: center;gap: 1rem;">
         <a class="button" href="{{ route('bookmarks.create') }}">New Bookmark</a>
         <a class="" href="{{ route('bookmarks.export') }}">Export CSV</a>
     </div>
