@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBookmarkRequest;
 use App\Models\Bookmark;
+use App\Models\Tag;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spekulatius\PHPScraper\PHPScraper;
 
 class BookmarkController extends Controller
 {
@@ -14,13 +17,13 @@ class BookmarkController extends Controller
         return view('bookmarks.create');
     }
 
-    public function destroy(Bookmark $bookmark)
+    public function destroy(Bookmark $bookmark, Request $request)
     {
         if ($bookmark->user_id == Auth::user()->id) {
             $bookmark->delete();
         }
 
-        return redirect(route('bookmarks.index'));
+        return view('bookmarks.list', ['bookmarks' => Auth::user()->bookmarks]);
     }
 
     public function store(StoreBookmarkRequest $request)
@@ -28,7 +31,18 @@ class BookmarkController extends Controller
         $validated = $request->validated();
 
         $bookmark = Auth::user()->bookmarks()->create($validated);
-        $bookmark->fillMetaTags();
+
+        if (isset($validated['tags'])) {
+            $tags = explode(',', $validated['tags']);
+
+            foreach ($tags as $tag) {
+                $tag = Tag::firstOrCreate([
+                    'user_id' => Auth()->user()->id,
+                    'name' => $tag,
+                ]);
+                $bookmark->tags()->attach($tag);
+            }
+        }
 
         return redirect(route('bookmarks.index'));
     }
@@ -49,7 +63,7 @@ class BookmarkController extends Controller
             $query = $query->where('tags', 'LIKE', '%' . $tag . '%');
         }
 
-        return view('bookmarks.list', [
+        return view('bookmarks.index', [
             'bookmarks' => $query->get(),
         ]);
     }
@@ -67,5 +81,30 @@ class BookmarkController extends Controller
         return response($output)
             ->header('Content-Type', 'text/csv')
             ->header('Content-Disposition', 'attachment; filename="bookmark_export.csv"');
+    }
+
+    public function scrapeDataForm(Request $request)
+    {
+        $url = $request->input('url');
+
+        $web = new PHPScraper();
+
+        try {
+            $meta = $web->go($url);
+
+            $name = $meta->title ?? '';
+            $description = $meta->description ?? '';
+            $author = $meta->author ?? '';
+            $image_url = $meta->image ?? $meta->openGraph['og:image'] ?? $meta->twitterCard['twitter:image'] ?? '';
+
+            return view('bookmarks.scrape-data-form', [
+                'name' => $name,
+                'description' => $description,
+                'author' => $author,
+                'image_url' => $image_url
+            ]);
+        } catch (Exception $e) {
+            return view('bookmarks.scrape-data-form');
+        }
     }
 }

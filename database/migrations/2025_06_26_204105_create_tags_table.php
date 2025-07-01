@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bookmarks', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('url');
-            $table->string('name')->nullable();
-            $table->string('author')->nullable();
-            $table->text('description')->nullable();
+            $table->foreignId('user_id');
+            $table->string('name');
+            $table->string('icon')->nullable();
+            $table->string('tag_color')->nullable();
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookmarks');
+        Schema::dropIfExists('tags');
     }
 };

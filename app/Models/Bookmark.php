@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
 use Spekulatius\PHPScraper\PHPScraper;
 
@@ -14,7 +16,6 @@ class Bookmark extends Model
         'name',
         'description',
         'author',
-        'tags',
         'user_id',
         'folder',
         'favicon_url',
@@ -22,8 +23,14 @@ class Bookmark extends Model
         'notes',
     ];
 
-    public function user() {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
     }
 
     public function tagsArray(): array
@@ -46,7 +53,7 @@ class Bookmark extends Model
             $this->name = $meta->title ?? '';
             $this->description = $meta->description ?? '';
             $this->author = $meta->author ?? '';
-            $this->image_url = $meta->image ?? '';
+            $this->image_url = $meta->image ?? $meta->openGraph['og:image'] ?? $meta->twitterCard['twitter:image'] ?? '';
             $this->save();
         }
         catch (Exception $e) {}
