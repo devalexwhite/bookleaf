@@ -48,11 +48,7 @@
                             class=" bg-blue-500 hover:bg-blue-400 transition-all rounded-full px-3 py-1 text-sm text-gray-100 font-bold">
                             <a href="/">
                                 {{ $tag->name }}
-
-                                <button href="{{ $bookmark->url }}" class="text-3xl bg-black/60 p-3 rounded-lg cursor-pointer"
-                                    hx-confirm="Are you sure you wish to delete this bookmark?" hx-target="#bookmark-list"
-                                    hx-swap="outerHTML" hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'
-                                    hx-delete="{{ route("bookmarks.destroy", ['bookmark' => $bookmark]) }}"></button> </a>
+                            </a>
                         </li>
                     @endforeach
                 </ul>
