@@ -33,5 +33,6 @@ Route::post('login', [UserController::class, 'login'])->name('users.login');
 Route::resource('bookmarks', BookmarkController::class)->only(['create', 'store', 'index', 'destroy'])->middleware('auth');
 Route::get('bookmarks/export', [BookmarkController::class, 'export'])->name('bookmarks.export')->middleware('auth');
 Route::post('bookmarks/scrapeDataForm', [BookmarkController::class, 'scrapeDataForm'])->name('bookmarks.scrapeDataForm')->middleware('auth');
+Route::get('bookmarks/list', [BookmarkController::class, 'list'])->name('bookmarks.list')->middleware('auth');
 
 Route::post('tags/suggest', [TagController::class, 'suggest'])->name('tags.suggest')->middleware('auth');

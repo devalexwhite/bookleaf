@@ -4,6 +4,6 @@
         <a class="btn btn-outline" href="{{ route('bookmarks.export') }}">Export CSV</a>
     </div>
     <div class="min-h-screen">
-        @include('bookmarks.list', ['bookmarks' => $bookmarks])
+        @include('bookmarks.list', ['bookmarks' => $bookmarks, 'view' => $view])
     </div>
 </x-layout>

@@ -8,64 +8,131 @@
         'bg-linear-to-r from-amber-200 via-orange-400 to-red-600',
     ];
 @endphp
+<div id="bookmark-list" class="max-w-6xl mx-auto px-6 py-3">
+    <div class="join mb-10">
+        <button hx-get="{{ route('bookmarks.list', ['view' => 'card']) }}" hx-target="#bookmark-list"
+            hx-swap="outerHTML" class="btn  btn-sm {{ $view == 'card' ? 'btn-primary' : 'btn-ghost' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                <path fill-rule="evenodd"
+                    d="M6 4.75A.75.75 0 0 1 6.75 4h10.5a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 4.75ZM6 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 10Zm0 5.25a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H6.75a.75.75 0 0 1-.75-.75ZM1.99 4.75a1 1 0 0 1 1-1H3a1 1 0 0 1 1 1v.01a1 1 0 0 1-1 1h-.01a1 1 0 0 1-1-1v-.01ZM1.99 15.25a1 1 0 0 1 1-1H3a1 1 0 0 1 1 1v.01a1 1 0 0 1-1 1h-.01a1 1 0 0 1-1-1v-.01ZM1.99 10a1 1 0 0 1 1-1H3a1 1 0 0 1 1 1v.01a1 1 0 0 1-1 1h-.01a1 1 0 0 1-1-1V10Z"
+                    clip-rule="evenodd" />
+            </svg>
 
-<ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 max-w-6xl mx-auto px-6 py-3"
-    id="bookmark-list">
-    @foreach ($bookmarks as $bookmark)
-        <li class="w-full">
-            <div class="w-full flex flex-col" target="_blank">
-                <div
-                    class="relative w-full h-22 md:h-64 rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 group transition-all">
-                    <a href="{{  $bookmark->url }}" target="_blank"
-                        class="absolute top-0 left-0 w-full h-full z-20 transition-all md:hidden md:pointer-events-none"></a>
-                    <div
-                        class="hidden md:flex absolute z-20 top-0 left-0 w-full h-full flex-row backdrop-blur-sm transition-all bg-white/40 items-center justify-center gap-4 opacity-0 group-hover:opacity-100">
-                        <a href="{{ $bookmark->url }}" class="text-3xl bg-black/60 p-3 rounded-lg" target="_blank">
-                            🔗
-                        </a>
-                        <button href="{{ $bookmark->url }}" class="text-3xl bg-black/60 p-3 rounded-lg cursor-pointer"
-                            hx-confirm="Are you sure you wish to delete this bookmark?" hx-target="#bookmark-list"
-                            hx-swap="outerHTML" hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'
-                            hx-delete="{{ route("bookmarks.destroy", ['bookmark' => $bookmark]) }}">
-                            🗑️
-                        </button>
-                    </div>
-                    @if (isset($bookmark->image_url) && $bookmark->image_url != null && trim($bookmark->image_url) != "")
-                        <img src="{{ $bookmark->image_url }}"
-                            class="w-full h-64 object-cover rounded-lg shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all" />
-                    @else
-                        <div
-                            class="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center bg-white/80 justify-center z-10">
-                            <h3 class="text-gray-800 text-base md:text-2xl lowercase tracking-wide font-medium text-center">
-                                {{ $bookmark->name ?? Uri::of($bookmark->url)->host() }}
-                            </h3>
-                        </div>
-                        <div class="absolute top-0 left-0 w-full h-full {{ $gradients[array_rand($gradients)] }} blur-xl">
+            Card View
+        </button>
+        <button class="btn btn-sm {{ $view == 'list' ? 'btn-primary' : 'btn-ghost' }}"
+            hx-get="{{ route('bookmarks.list', parameters: ['view' => 'list']) }}" hx-target="#bookmark-list"
+            hx-swap="outerHTML">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                <path fill-rule="evenodd"
+                    d="M4.25 2A2.25 2.25 0 0 0 2 4.25v2.5A2.25 2.25 0 0 0 4.25 9h2.5A2.25 2.25 0 0 0 9 6.75v-2.5A2.25 2.25 0 0 0 6.75 2h-2.5Zm0 9A2.25 2.25 0 0 0 2 13.25v2.5A2.25 2.25 0 0 0 4.25 18h2.5A2.25 2.25 0 0 0 9 15.75v-2.5A2.25 2.25 0 0 0 6.75 11h-2.5Zm9-9A2.25 2.25 0 0 0 11 4.25v2.5A2.25 2.25 0 0 0 13.25 9h2.5A2.25 2.25 0 0 0 18 6.75v-2.5A2.25 2.25 0 0 0 15.75 2h-2.5Zm0 9A2.25 2.25 0 0 0 11 13.25v2.5A2.25 2.25 0 0 0 13.25 18h2.5A2.25 2.25 0 0 0 18 15.75v-2.5A2.25 2.25 0 0 0 15.75 11h-2.5Z"
+                    clip-rule="evenodd" />
+            </svg>
+
+            List View
+        </button>
+    </div>
+
+    @if (isset($view) && $view == 'list')
+        <ul class="list bg-base-100">
+            @foreach ($bookmarks as $bookmark)
+                <li class="list-row flex flex-col md:flex-row w-full">
+                    @if ($bookmark->image_url && trim($bookmark->image_url) != "")
+                        <div class="mr-2">
+                            <img class="size-10 rounded-box" src="{{ $bookmark->image_url }}" />
                         </div>
                     @endif
-                </div>
-                <div class="flex flex-row justify-end items-center gap-2 md:hidden mt-2">
-                    <button href="{{ $bookmark->url }}" class="text-xs text-black dark:text-white cursor-pointer"
-                        hx-confirm="Are you sure you wish to delete this bookmark?" hx-target="#bookmark-list"
-                        hx-swap="outerHTML" hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'
-                        hx-delete="{{ route("bookmarks.destroy", ['bookmark' => $bookmark]) }}">
-                        🗑️ Delete
+                    <div class="flex-1 flex-col flex">
+                        <a href="{{ $bookmark->url }}" target="_blank" class="flex-1">
+
+                            <div>{{ $bookmark->name ?? Uri::of($bookmark->url)->host() }}</div>
+                            <div class="mt-1 text-xs font-semibold opacity-60">
+                                {{ $bookmark->notes ?? $bookmark->description }}
+                            </div>
+                        </a>
+                        <ul class="flex flex-row gap-2 flex-wrap mt-2">
+                            @foreach ($bookmark->tags as $tag)
+                                <li
+                                    class=" bg-blue-500 hover:bg-blue-400 transition-all rounded-full px-3 py-1 text-xs text-gray-100">
+                                    <a href="#">
+                                        {{ $tag->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                    <button class="btn mt-2 btn-sm md:mt-0 btn-square btn-warning">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                        </svg>
+
                     </button>
-                </div>
-                <ul class="flex flex-row gap-2 flex-wrap mt-2">
-                    @foreach ($bookmark->tags as $tag)
-                        <li
-                            class=" bg-blue-500 hover:bg-blue-400 transition-all rounded-full px-3 py-1 text-sm text-gray-100 font-bold">
-                            <a href="/">
-                                {{ $tag->name }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-                <p class="text-sm text-gray-600 dark:text-gray-300 mt-2 leading-6">
-                    {{ $bookmark->notes ?? $bookmark->description }}
-                </p>
-            </div>
-        </li>
-    @endforeach
-</ul>
+
+                </li>
+            @endforeach
+        </ul>
+    @else
+        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
+            @foreach ($bookmarks as $bookmark)
+                <li class="w-full">
+                    <div class="w-full flex flex-col" target="_blank">
+                        <div
+                            class="relative w-full h-22 md:h-64 rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 group transition-all">
+                            <a href="{{  $bookmark->url }}" target="_blank"
+                                class="absolute top-0 left-0 w-full h-full z-20 transition-all md:hidden md:pointer-events-none"></a>
+                            <div
+                                class="hidden md:flex absolute z-20 top-0 left-0 w-full h-full flex-row backdrop-blur-sm transition-all bg-white/40 items-center justify-center gap-4 opacity-0 group-hover:opacity-100">
+                                <a href="{{ $bookmark->url }}" class="text-3xl bg-black/60 p-3 rounded-lg" target="_blank">
+                                    🔗
+                                </a>
+                                <button class="text-3xl bg-black/60 p-3 rounded-lg cursor-pointer"
+                                    hx-confirm="Are you sure you wish to delete this bookmark?" hx-target="#bookmark-list"
+                                    hx-swap="outerHTML" hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'
+                                    hx-delete="{{ route("bookmarks.destroy", ['bookmark' => $bookmark]) }}">
+                                    🗑️
+                                </button>
+                            </div>
+                            @if (isset($bookmark->image_url) && $bookmark->image_url != null && trim($bookmark->image_url) != "")
+                                <img src="{{ $bookmark->image_url }}"
+                                    class="w-full h-64 object-cover rounded-lg shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all" />
+                            @else
+                                <div
+                                    class="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center bg-white/80 justify-center z-10">
+                                    <h3 class="text-gray-800 text-base md:text-2xl lowercase tracking-wide font-medium text-center">
+                                        {{ $bookmark->name ?? Uri::of($bookmark->url)->host() }}
+                                    </h3>
+                                </div>
+                                <div class="absolute top-0 left-0 w-full h-full {{ $gradients[array_rand($gradients)] }} blur-xl">
+                                </div>
+                            @endif
+                        </div>
+                        <div class="flex flex-row justify-end items-center gap-2 md:hidden mt-2">
+                            <button class="text-xs text-black dark:text-white cursor-pointer"
+                                hx-confirm="Are you sure you wish to delete this bookmark?" hx-target="#bookmark-list"
+                                hx-swap="outerHTML" hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'
+                                hx-delete="{{ route("bookmarks.destroy", ['bookmark' => $bookmark]) }}">
+                                🗑️ Delete
+                            </button>
+                        </div>
+                        <ul class="flex flex-row gap-2 flex-wrap mt-2">
+                            @foreach ($bookmark->tags as $tag)
+                                <li
+                                    class=" bg-blue-500 hover:bg-blue-400 transition-all rounded-full px-3 py-1 text-sm text-gray-100 font-bold">
+                                    <a href="/">
+                                        {{ $tag->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <p class="text-sm text-gray-600 dark:text-gray-300 mt-2 leading-6">
+                            {{ $bookmark->notes ?? $bookmark->description }}
+                        </p>
+                    </div>
+                </li>
+            @endforeach
+        </ul>
+    @endif
+</div>

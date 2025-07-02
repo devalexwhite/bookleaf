@@ -23,7 +23,12 @@ class BookmarkController extends Controller
             $bookmark->delete();
         }
 
-        return view('bookmarks.list', ['bookmarks' => Auth::user()->bookmarks]);
+        return view('bookmarks.list', ['bookmarks' => Auth::user()->bookmarks, 'view' => $request->query('view', 'card'),]);
+    }
+
+    public function list(Request $request)
+    {
+        return view('bookmarks.list', ['bookmarks' => Auth::user()->bookmarks, 'view' => $request->query('view', 'card'),]);
     }
 
     public function store(StoreBookmarkRequest $request)
@@ -65,6 +70,7 @@ class BookmarkController extends Controller
 
         return view('bookmarks.index', [
             'bookmarks' => $query->get(),
+            'view' => $request->query('view', 'card'),
         ]);
     }
 
