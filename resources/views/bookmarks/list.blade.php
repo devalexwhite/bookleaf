@@ -15,9 +15,11 @@
         <li class="w-full">
             <div class="w-full flex flex-col" target="_blank">
                 <div
-                    class="relative w-full h-64 rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 group transition-all">
+                    class="relative w-full h-22 md:h-64 rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 group transition-all">
+                    <a href="{{  $bookmark->url }}" target="_blank"
+                        class="absolute top-0 left-0 w-full h-full z-20 transition-all md:hidden md:pointer-events-none"></a>
                     <div
-                        class="absolute z-20 top-0 left-0 w-full h-full flex-row backdrop-blur-sm transition-all bg-white/40 items-center justify-center gap-4 opacity-0 group-hover:opacity-100 flex">
+                        class="hidden md:flex absolute z-20 top-0 left-0 w-full h-full flex-row backdrop-blur-sm transition-all bg-white/40 items-center justify-center gap-4 opacity-0 group-hover:opacity-100">
                         <a href="{{ $bookmark->url }}" class="text-3xl bg-black/60 p-3 rounded-lg" target="_blank">
                             🔗
                         </a>
@@ -34,13 +36,21 @@
                     @else
                         <div
                             class="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center bg-white/80 justify-center z-10">
-                            <h3 class="text-gray-800 text-2xl lowercase tracking-wide font-black text-center">
+                            <h3 class="text-gray-800 text-base md:text-2xl lowercase tracking-wide font-medium text-center">
                                 {{ $bookmark->name ?? Uri::of($bookmark->url)->host() }}
                             </h3>
                         </div>
                         <div class="absolute top-0 left-0 w-full h-full {{ $gradients[array_rand($gradients)] }} blur-xl">
                         </div>
                     @endif
+                </div>
+                <div class="flex flex-row justify-end items-center gap-2 md:hidden mt-2">
+                    <button href="{{ $bookmark->url }}" class="text-xs text-black dark:text-white cursor-pointer"
+                        hx-confirm="Are you sure you wish to delete this bookmark?" hx-target="#bookmark-list"
+                        hx-swap="outerHTML" hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'
+                        hx-delete="{{ route("bookmarks.destroy", ['bookmark' => $bookmark]) }}">
+                        🗑️ Delete
+                    </button>
                 </div>
                 <ul class="flex flex-row gap-2 flex-wrap mt-2">
                     @foreach ($bookmark->tags as $tag)
