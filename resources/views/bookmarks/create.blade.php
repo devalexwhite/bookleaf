@@ -13,7 +13,7 @@
     <form method="POST" action="{{ route('bookmarks.store') }}">
         @csrf
         <div
-            class="flex flex-row items-center justify-center w-full py-4 px-2 gap-6 bg-gray-700 mb-16 fixed top-0 z-100">
+            class="flex flex-row items-center justify-center w-full py-4 px-2 gap-6 bg-secondary mb-16 fixed top-0 z-100">
             <button type="submit" class="btn btn-primary">Save Bookmark</button>
             <a href="{{ route('bookmarks.index') }}" class="btn btn-outline">Cancel</a>
         </div>
