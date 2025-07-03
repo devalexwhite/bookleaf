@@ -67,10 +67,8 @@
 
                     <ul class="flex flex-row gap-2 flex-wrap">
                         @foreach ($bookmark->tags as $tag)
-                            <li class=" badge badge-sm badge-secondary">
-                                <a href="#">
-                                    {{ $tag->name }}
-                                </a>
+                            <li class=" badge badge-outline">
+                                {{ $tag->name }}
                             </li>
                         @endforeach
                     </ul>
@@ -78,70 +76,61 @@
             @endforeach
         </ul>
     @else
-        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
-            @foreach ($bookmarks as $bookmark)
-                <li class="w-full">
-                    <div class="w-full flex flex-col" target="_blank">
-                        <div
-                            class="relative w-full aspect-video md:h-64 rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 group transition-all">
-                            <div
-                                class="absolute top-0 left-0 w-full h-full flex items-end justify-end gap-2 md:hidden z-30 pb-1 pr-1">
-                                <button class="btn btn-circle btn-warning btn-sm"
-                                    hx-confirm="Are you sure you wish to delete this bookmark?" hx-target="#bookmark-list"
-                                    hx-swap="outerHTML" hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'
-                                    hx-delete="{{ route("bookmarks.destroy", ['bookmark' => $bookmark]) }}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                        class="size-5">
-                                        <path fill-rule="evenodd"
-                                            d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <a href="{{  $bookmark->url }}" target="_blank"
-                                class="absolute top-0 left-0 w-full h-full z-20 transition-all md:hidden md:pointer-events-none"></a>
-                            <div
-                                class="hidden md:flex absolute z-20 top-0 left-0 w-full h-full flex-row backdrop-blur-sm transition-all bg-white/40 items-center justify-center gap-4 opacity-0 group-hover:opacity-100">
-                                <a href="{{ $bookmark->url }}" class="text-3xl bg-black/60 p-3 rounded-lg" target="_blank">
-                                    🔗
-                                </a>
-                                <button class="text-3xl bg-black/60 p-3 rounded-lg cursor-pointer"
-                                    hx-confirm="Are you sure you wish to delete this bookmark?" hx-target="#bookmark-list"
-                                    hx-swap="outerHTML" hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'
-                                    hx-delete="{{ route("bookmarks.destroy", ['bookmark' => $bookmark]) }}">
-                                    🗑️
-                                </button>
-                            </div>
-                            @if (isset($bookmark->image_url) && $bookmark->image_url != null && trim($bookmark->image_url) != "")
-                                <img src="{{ $bookmark->image_url }}"
-                                    class="w-full h-64 object-cover rounded-lg shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all" />
-                            @else
-                                <div
-                                    class="absolute top-0 left-0 w-full h-full backdrop-blur-lg flex items-center bg-white/80 justify-center z-10">
-                                    <h3 class="text-gray-800 text-base md:text-2xl lowercase tracking-wide font-medium text-center">
-                                        {{ $bookmark->name ?? Uri::of($bookmark->url)->host() }}
-                                    </h3>
-                                </div>
-                                <div class="absolute top-0 left-0 w-full h-full {{ $gradients[array_rand($gradients)] }} blur-xl">
-                                </div>
+        @php
+            $columns = 3;
+            $bookmarkCount = count($bookmarks);
+            $columnBookmarks = array_fill(0, $columns, []);
+            foreach ($bookmarks as $i => $bookmark) {
+                $columnBookmarks[$i % $columns][] = $bookmark;
+            }
+        @endphp
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            @foreach ($columnBookmarks as $col)
+                <div class="flex flex-col gap-4">
+                    @foreach ($col as $bookmark)
+                        <div class="card bg-base-200 w-full shadow-sm">
+                            @if ($bookmark->image_url && trim($bookmark->image_url) != "")
+                                <figure>
+                                    <img src="{{ $bookmark->image_url }}" />
+                                </figure>
                             @endif
-                        </div>
-                        <ul class="flex flex-row gap-2 flex-wrap mt-2">
-                            @foreach ($bookmark->tags as $tag)
-                                <li
-                                    class=" bg-blue-500 hover:bg-blue-400 transition-all rounded-full px-3 py-1 text-sm text-gray-100 font-bold">
-                                    <a href="/">
-                                        {{ $tag->name }}
+                            <div class="card-body">
+                                <h2 class="card-title">
+                                    {{ $bookmark->name ?? Uri::of($bookmark->url)->host() }}
+                                </h2>
+                                <p>{{ $bookmark->notes ?? $bookmark->description }}</p>
+                                <div class="card-actions justify-start">
+                                    @foreach ($bookmark->tags as $tag)
+                                        <div class="badge badge-outline">{{ $tag->name }}</div>
+                                    @endforeach
+                                </div>
+                                <div class="card-actions">
+                                    <a href="{{ $bookmark->url }}" target="_blank" class="btn btn-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                            class="size-5">
+                                            <path fill-rule="evenodd"
+                                                d="M4.25 5.5a.75.75 0 0 0-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 0 0 .75-.75v-4a.75.75 0 0 1 1.5 0v4A2.25 2.25 0 0 1 12.75 17h-8.5A2.25 2.25 0 0 1 2 14.75v-8.5A2.25 2.25 0 0 1 4.25 4h5a.75.75 0 0 1 0 1.5h-5Z"
+                                                clip-rule="evenodd" />
+                                            <path fill-rule="evenodd"
+                                                d="M6.194 12.753a.75.75 0 0 0 1.06.053L16.5 4.44v2.81a.75.75 0 0 0 1.5 0v-4.5a.75.75 0 0 0-.75-.75h-4.5a.75.75 0 0 0 0 1.5h2.553l-9.056 8.194a.75.75 0 0 0-.053 1.06Z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                        Visit
                                     </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                        <p class="text-sm text-gray-600 dark:text-gray-300 mt-2 leading-6">
-                            {{ $bookmark->notes ?? $bookmark->description }}
-                        </p>
-                    </div>
-                </li>
+                                    <button class="btn btn-ghost">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor" class="size-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                        </svg>
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             @endforeach
-        </ul>
+        </div>
     @endif
 </div>
