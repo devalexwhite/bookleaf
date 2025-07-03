@@ -99,7 +99,7 @@
                                     {{ $bookmark->name ?? Uri::of($bookmark->url)->host() }}
                                 </h2>
                                 <p>{{ $bookmark->notes ?? $bookmark->description }}</p>
-                                <div class="card-actions justify-start">
+                                <div class="card-actions justify-start my-1">
                                     @foreach ($bookmark->tags as $tag)
                                         <div class="badge badge-outline">{{ $tag->name }}</div>
                                     @endforeach
