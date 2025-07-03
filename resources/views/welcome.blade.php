@@ -37,12 +37,19 @@
                     focused, bookmarking
                     for the articles, books, videos, music, RSS feeds and websites you love.</p>
                   <div class="mt-10 flex items-center gap-x-6">
-                    <a href="{{ route('signup') }}"
-                      class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-lg font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get
-                      Started</a>
-                    <a href="{{ route('login') }}"
-                      class="text-lg font-semibold text-gray-900 dark:text-gray-50">Login<span
-                        aria-hidden="true">→</span></a>
+                    @auth
+            <a href="{{ route('bookmarks.index') }}"
+              class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-lg font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Your
+              Bookmarks</a>
+          @endauth
+                    @guest
+            <a href="{{ route('signup') }}"
+              class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-lg font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get
+              Started</a>
+            <a href="{{ route('login') }}"
+              class="text-lg font-semibold text-gray-900 dark:text-gray-50">Login<span
+              aria-hidden="true">→</span></a>
+          @endguest
                   </div>
                 </div>
               </div>
