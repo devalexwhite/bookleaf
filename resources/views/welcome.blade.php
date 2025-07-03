@@ -16,7 +16,7 @@
                     </a>
                   </div>
                   <div class="mt-24 sm:mt-32 lg:mt-16">
-                    <a href="/changelog" class="inline-flex space-x-6">
+                    <a href="https://thatalexguy.dev/tags/bookleaf/" class="inline-flex space-x-6" target="_blank">
                       <span
                         class="flex flex-row gap-1 items-center justify-center rounded-full bg-indigo-600/10 dark:bg-indigo-200/10 px-3 py-1 text-sm/6 font-semibold text-indigo-600 dark:text-indigo-100 ring-1 ring-indigo-600/10 ring-inset">
                         Changelog
