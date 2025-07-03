@@ -9,17 +9,10 @@
     ];
 @endphp
 
-<x-layout title="Create Bookmark">
+<x-app-layout title="Create Bookmark">
     <form method="POST" action="{{ route('bookmarks.store') }}">
         @csrf
-        <div
-            class="flex flex-row items-center justify-center w-full py-4 px-2 gap-6 bg-secondary mb-16 fixed top-0 z-100">
-            <button type="submit" class="btn btn-primary">Save Bookmark</button>
-            <a href="{{ route('bookmarks.index') }}" class="btn btn-outline">Cancel</a>
-        </div>
-
-
-        <div class="max-w-2xl mt-32 mb-16 px-6 py-4 mx-auto">
+        <div class="max-w-2xl mb-16 px-6 py-4 mx-auto">
             <div class="prose mb-16">
                 <h1>Create a new bookmark</h1>
                 <blockquote>
@@ -80,6 +73,12 @@
 
             @include('tags.tags-suggest-input')
 
+            <div class="flex flex-row gap-4 mt-8">
+                <button type="submit" class="btn btn-primary flex-1 md:flex-0">Save</button>
+                <a href="{{ route('bookmarks.index') }}" class="btn btn-outline flex-1 md:flex-0">Cancel</a>
+            </div>
         </div>
+
+
     </form>
-</x-layout>
+</x-app-layout>

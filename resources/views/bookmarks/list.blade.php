@@ -9,31 +9,37 @@
     ];
 @endphp
 <div id="bookmark-list" class="max-w-6xl mx-auto px-6 py-3">
-    <div class="join mb-10">
-        <button hx-get="{{ route('bookmarks.index', ['view' => 'card']) }}" hx-target="#bookmark-list"
-            hx-push-url="true" hx-swap="outerHTML"
-            class="btn  btn-sm {{ $view == 'card' ? 'btn-primary' : 'btn-ghost' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                <path fill-rule="evenodd"
-                    d="M4.25 2A2.25 2.25 0 0 0 2 4.25v2.5A2.25 2.25 0 0 0 4.25 9h2.5A2.25 2.25 0 0 0 9 6.75v-2.5A2.25 2.25 0 0 0 6.75 2h-2.5Zm0 9A2.25 2.25 0 0 0 2 13.25v2.5A2.25 2.25 0 0 0 4.25 18h2.5A2.25 2.25 0 0 0 9 15.75v-2.5A2.25 2.25 0 0 0 6.75 11h-2.5Zm9-9A2.25 2.25 0 0 0 11 4.25v2.5A2.25 2.25 0 0 0 13.25 9h2.5A2.25 2.25 0 0 0 18 6.75v-2.5A2.25 2.25 0 0 0 15.75 2h-2.5Zm0 9A2.25 2.25 0 0 0 11 13.25v2.5A2.25 2.25 0 0 0 13.25 18h2.5A2.25 2.25 0 0 0 18 15.75v-2.5A2.25 2.25 0 0 0 15.75 11h-2.5Z"
-                    clip-rule="evenodd" />
-            </svg>
+    <div class="flex flex-col-reverse gap-8 md:gap-0 md:flex-row items-center justify-between w-full mb-10">
+        <div class="join">
+            <button hx-get="{{ route('bookmarks.index', ['view' => 'card']) }}" hx-target="#bookmark-list"
+                hx-push-url="true" hx-swap="outerHTML"
+                class="btn  btn-sm {{ $view == 'card' ? 'btn-accent' : 'btn-ghost' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                    <path fill-rule="evenodd"
+                        d="M4.25 2A2.25 2.25 0 0 0 2 4.25v2.5A2.25 2.25 0 0 0 4.25 9h2.5A2.25 2.25 0 0 0 9 6.75v-2.5A2.25 2.25 0 0 0 6.75 2h-2.5Zm0 9A2.25 2.25 0 0 0 2 13.25v2.5A2.25 2.25 0 0 0 4.25 18h2.5A2.25 2.25 0 0 0 9 15.75v-2.5A2.25 2.25 0 0 0 6.75 11h-2.5Zm9-9A2.25 2.25 0 0 0 11 4.25v2.5A2.25 2.25 0 0 0 13.25 9h2.5A2.25 2.25 0 0 0 18 6.75v-2.5A2.25 2.25 0 0 0 15.75 2h-2.5Zm0 9A2.25 2.25 0 0 0 11 13.25v2.5A2.25 2.25 0 0 0 13.25 18h2.5A2.25 2.25 0 0 0 18 15.75v-2.5A2.25 2.25 0 0 0 15.75 11h-2.5Z"
+                        clip-rule="evenodd" />
+                </svg>
 
-            Card View
-        </button>
-        <button class="btn btn-sm {{ $view == 'list' ? 'btn-primary' : 'btn-ghost' }}" hx-push-url="true"
-            hx-get="{{ route('bookmarks.index', parameters: ['view' => 'list']) }}" hx-target="#bookmark-list"
-            hx-swap="outerHTML">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                <path fill-rule="evenodd"
-                    d="M6 4.75A.75.75 0 0 1 6.75 4h10.5a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 4.75ZM6 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 10Zm0 5.25a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H6.75a.75.75 0 0 1-.75-.75ZM1.99 4.75a1 1 0 0 1 1-1H3a1 1 0 0 1 1 1v.01a1 1 0 0 1-1 1h-.01a1 1 0 0 1-1-1v-.01ZM1.99 15.25a1 1 0 0 1 1-1H3a1 1 0 0 1 1 1v.01a1 1 0 0 1-1 1h-.01a1 1 0 0 1-1-1v-.01ZM1.99 10a1 1 0 0 1 1-1H3a1 1 0 0 1 1 1v.01a1 1 0 0 1-1 1h-.01a1 1 0 0 1-1-1V10Z"
-                    clip-rule="evenodd" />
-            </svg>
+                Card View
+            </button>
+            <button class="btn btn-sm {{ $view == 'list' ? 'btn-accent' : 'btn-ghost' }}" hx-push-url="true"
+                hx-get="{{ route('bookmarks.index', parameters: ['view' => 'list']) }}" hx-target="#bookmark-list"
+                hx-swap="outerHTML">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                    <path fill-rule="evenodd"
+                        d="M6 4.75A.75.75 0 0 1 6.75 4h10.5a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 4.75ZM6 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 10Zm0 5.25a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H6.75a.75.75 0 0 1-.75-.75ZM1.99 4.75a1 1 0 0 1 1-1H3a1 1 0 0 1 1 1v.01a1 1 0 0 1-1 1h-.01a1 1 0 0 1-1-1v-.01ZM1.99 15.25a1 1 0 0 1 1-1H3a1 1 0 0 1 1 1v.01a1 1 0 0 1-1 1h-.01a1 1 0 0 1-1-1v-.01ZM1.99 10a1 1 0 0 1 1-1H3a1 1 0 0 1 1 1v.01a1 1 0 0 1-1 1h-.01a1 1 0 0 1-1-1V10Z"
+                        clip-rule="evenodd" />
+                </svg>
 
-            List View
-        </button>
+                List View
+            </button>
+        </div>
+
+        <div class="flex flex-row gap-2">
+            <a class="btn btn-primary btn-sm" href="{{ route('bookmarks.create') }}">New Bookmark</a>
+            <a class="btn btn-outline btn-sm" href="{{ route('bookmarks.export') }}">Export CSV</a>
+        </div>
     </div>
-
     @if (isset($view) && $view == 'list')
         <ul class="list bg-base-100">
             @foreach ($bookmarks as $bookmark)

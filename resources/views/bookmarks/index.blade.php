@@ -1,9 +1,5 @@
-<x-layout title="Your Bookmarks">
-    <div class="flex flex-row items-center justify-center w-full py-4 px-2 gap-6 bg-secondary mb-16">
-        <a class="btn btn-primary" href="{{ route('bookmarks.create') }}">New Bookmark</a>
-        <a class="btn btn-outline" href="{{ route('bookmarks.export') }}">Export CSV</a>
-    </div>
+<x-app-layout title="Your Bookmarks">
     <div class="min-h-screen">
         @include('bookmarks.list', ['bookmarks' => $bookmarks, 'view' => $view])
     </div>
-</x-layout>
+</x-app-layout>

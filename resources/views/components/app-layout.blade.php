@@ -16,6 +16,10 @@
 </head>
 
 <body class="">
+    <header>
+        <div class="bg-secondary h-[10px] mb-8">
+        </div>
+    </header>
     <main class="min-h-screen">
         {{ $slot }}
     </main>
