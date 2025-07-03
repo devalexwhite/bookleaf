@@ -26,11 +26,6 @@ class BookmarkController extends Controller
         return view('bookmarks.list', ['bookmarks' => Auth::user()->bookmarks, 'view' => $request->query('view', 'card'),]);
     }
 
-    public function list(Request $request)
-    {
-        return view('bookmarks.list', ['bookmarks' => Auth::user()->bookmarks, 'view' => $request->query('view', 'card'),]);
-    }
-
     public function store(StoreBookmarkRequest $request)
     {
         $validated = $request->validated();
@@ -68,10 +63,18 @@ class BookmarkController extends Controller
             $query = $query->where('tags', 'LIKE', '%' . $tag . '%');
         }
 
-        return view('bookmarks.index', [
-            'bookmarks' => $query->get(),
-            'view' => $request->query('view', 'card'),
-        ]);
+        if ($request->hasHeader('HX-Request')) {
+            return view('bookmarks.list', [
+                'bookmarks' => $query->get(),
+                'view' => $request->query('view', 'card'),
+            ]);
+        } else {
+            return view('bookmarks.index', [
+                'bookmarks' => $query->get(),
+                'view' => $request->query('view', 'card'),
+            ]);
+        }
+
     }
 
     public function export()

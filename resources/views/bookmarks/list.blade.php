@@ -10,8 +10,9 @@
 @endphp
 <div id="bookmark-list" class="max-w-6xl mx-auto px-6 py-3">
     <div class="join mb-10">
-        <button hx-get="{{ route('bookmarks.list', ['view' => 'card']) }}" hx-target="#bookmark-list"
-            hx-swap="outerHTML" class="btn  btn-sm {{ $view == 'card' ? 'btn-primary' : 'btn-ghost' }}">
+        <button hx-get="{{ route('bookmarks.index', ['view' => 'card']) }}" hx-target="#bookmark-list"
+            hx-push-url="true" hx-swap="outerHTML"
+            class="btn  btn-sm {{ $view == 'card' ? 'btn-primary' : 'btn-ghost' }}">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                 <path fill-rule="evenodd"
                     d="M4.25 2A2.25 2.25 0 0 0 2 4.25v2.5A2.25 2.25 0 0 0 4.25 9h2.5A2.25 2.25 0 0 0 9 6.75v-2.5A2.25 2.25 0 0 0 6.75 2h-2.5Zm0 9A2.25 2.25 0 0 0 2 13.25v2.5A2.25 2.25 0 0 0 4.25 18h2.5A2.25 2.25 0 0 0 9 15.75v-2.5A2.25 2.25 0 0 0 6.75 11h-2.5Zm9-9A2.25 2.25 0 0 0 11 4.25v2.5A2.25 2.25 0 0 0 13.25 9h2.5A2.25 2.25 0 0 0 18 6.75v-2.5A2.25 2.25 0 0 0 15.75 2h-2.5Zm0 9A2.25 2.25 0 0 0 11 13.25v2.5A2.25 2.25 0 0 0 13.25 18h2.5A2.25 2.25 0 0 0 18 15.75v-2.5A2.25 2.25 0 0 0 15.75 11h-2.5Z"
@@ -20,8 +21,8 @@
 
             Card View
         </button>
-        <button class="btn btn-sm {{ $view == 'list' ? 'btn-primary' : 'btn-ghost' }}"
-            hx-get="{{ route('bookmarks.list', parameters: ['view' => 'list']) }}" hx-target="#bookmark-list"
+        <button class="btn btn-sm {{ $view == 'list' ? 'btn-primary' : 'btn-ghost' }}" hx-push-url="true"
+            hx-get="{{ route('bookmarks.index', parameters: ['view' => 'list']) }}" hx-target="#bookmark-list"
             hx-swap="outerHTML">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                 <path fill-rule="evenodd"
