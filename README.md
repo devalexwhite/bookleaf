@@ -7,7 +7,7 @@ BookLeaf is a simple, private way to store and organize your bookmarks. Here's w
 - Private by default, no tracking scripts (heck no scripts at all)
 - Works on any device or network connection
 - User feedback driven
-- Exportable data (@TODO)
+- Exportable data
 
 ## Tech
 
@@ -15,13 +15,9 @@ BookLeaf is a simple, private way to store and organize your bookmarks. Here's w
 - Blade templates
 - MySQL
 - Hosted on DigitalOcean via Laravel Forge
-
-### Anti-tech stack (what this project doesn't use)
-
-- CSS frameworks
-- JavaScript frameworks
-- Complicated deploy processes
+- TailwindCSS + DaisyUI
+- HTMX + Surreal
 
 ## Screenshots
 
-![Screenshot From 2025-06-15 14-21-39](https://github.com/user-attachments/assets/16d3bf0a-e904-4d41-b930-14e992fcca74)
+![Screenshot Update Homepage](/public/images/home_screenshot.png)
