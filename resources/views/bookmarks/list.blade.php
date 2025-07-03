@@ -36,8 +36,8 @@
     @if (isset($view) && $view == 'list')
         <ul class="list bg-base-100">
             @foreach ($bookmarks as $bookmark)
-                <li class="flex flex-col">
-                    <div class="list-row flex flex-row w-full">
+                <li class="flex flex-col list-row">
+                    <div class=" flex flex-row w-full">
                         <div class="flex flex-row w-full flex-1">
                             @if ($bookmark->image_url && trim($bookmark->image_url) != "")
                                 <div class="mr-2">
