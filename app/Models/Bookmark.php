@@ -21,6 +21,7 @@ class Bookmark extends Model
         'favicon_url',
         'image_url',
         'notes',
+        'folder_id',
     ];
 
     public function user(): BelongsTo
@@ -35,7 +36,7 @@ class Bookmark extends Model
 
     public function tagsArray(): array
     {
-        return collect(explode(',', $this->tags))->map(fn ($value) => trim($value))->toArray();
+        return collect(explode(',', $this->tags))->map(fn($value) => trim($value))->toArray();
     }
 
     public static function getAllFolders(): array
@@ -55,18 +56,18 @@ class Bookmark extends Model
             $this->author = $meta->author ?? '';
             $this->image_url = $meta->image ?? $meta->openGraph['og:image'] ?? $meta->twitterCard['twitter:image'] ?? '';
             $this->save();
+        } catch (Exception $e) {
         }
-        catch (Exception $e) {}
     }
 
     public static function getAllTags(): array
     {
-        return Auth::user()->bookmarks()->select('tags')->get()->pluck('tags')->map(fn ($tag) => explode(',', $tag))->flatten()->unique()->toArray();
+        return Auth::user()->bookmarks()->select('tags')->get()->pluck('tags')->map(fn($tag) => explode(',', $tag))->flatten()->unique()->toArray();
     }
 
     public static function getTagsForFolder($folder): array
     {
-        return Auth::user()->bookmarks()->select('tags')->where('folder', $folder)->whereNotNull('tags')->get()->pluck('tags')->map(fn ($tag) => explode(',', $tag))->flatten()->unique()->toArray();
+        return Auth::user()->bookmarks()->select('tags')->where('folder', $folder)->whereNotNull('tags')->get()->pluck('tags')->map(fn($tag) => explode(',', $tag))->flatten()->unique()->toArray();
     }
 
     public function toCSVRow(): string
@@ -82,7 +83,8 @@ class Bookmark extends Model
         return implode(',', $data);
     }
 
-    private function quoteString($string) {
+    private function quoteString($string)
+    {
         return '"' . $string . '"';
     }
 
