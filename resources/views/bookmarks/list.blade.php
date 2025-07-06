@@ -55,6 +55,12 @@
                                 <a href="{{ $bookmark->url }}" target="_blank" class="flex-1">
 
                                     <div>{{ $bookmark->name ?? Uri::of($bookmark->url)->host() }}</div>
+                                    @php $lastUpdate = $bookmark->lastFeedUpdate() @endphp
+                                    @if ($lastUpdate)
+                                        <div class="text-xs opacity-60">
+                                            Last updated {{ $lastUpdate->diffForHumans() }}
+                                        </div>
+                                    @endif
                                     <div class="mt-1 text-xs font-semibold opacity-60">
                                         {{ $bookmark->notes ?? $bookmark->description }}
                                     </div>
@@ -107,6 +113,12 @@
                                 <h2 class="card-title">
                                     {{ $bookmark->name ?? Uri::of($bookmark->url)->host() }}
                                 </h2>
+                                @php $lastUpdate = $bookmark->lastFeedUpdate() @endphp
+                                @if ($lastUpdate)
+                                    <div class="text-xs opacity-60">
+                                        Last updated {{ $lastUpdate->diffForHumans() }}
+                                    </div>
+                                @endif
                                 <p>{{ $bookmark->notes ?? $bookmark->description }}</p>
                                 <div class="card-actions justify-start my-1">
                                     @foreach ($bookmark->tags as $tag)

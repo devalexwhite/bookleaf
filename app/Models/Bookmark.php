@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Auth;
 use Spekulatius\PHPScraper\PHPScraper;
 
@@ -96,5 +98,27 @@ class Bookmark extends Model
             'tags',
             'folder'
         ]);
+    }
+
+    public function feeds(): HasMany
+    {
+        return $this->hasMany(Feed::class);
+    }
+
+    public function feedPosts(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            FeedPost::class,
+            Feed::class,
+            'bookmark_id', // Foreign key on feeds table
+            'feed_id',     // Foreign key on feed_posts table
+            'id',          // Local key on bookmarks table
+            'id'           // Local key on feeds table
+        );
+    }
+
+    public function lastFeedUpdate(): ?\Carbon\Carbon
+    {
+        return $this->feedPosts()->latest('published_at')->value('published_at');
     }
 }

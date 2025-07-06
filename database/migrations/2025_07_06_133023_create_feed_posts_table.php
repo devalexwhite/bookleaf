@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('author')->nullable();
             $table->string('link')->nullable();
             $table->string('guid')->index();
-            $table->dateTime('published_at')->nullable();
+            $table->dateTime('published_at')->index();
             $table->string('categories')->nullable();
         });
     }
