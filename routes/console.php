@@ -8,7 +8,7 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('feeds:fetch-posts', ['--batch' => 50])
-    ->everyMinute()
+    ->everyOddHour()
     ->withoutOverlapping()
     ->onFailure(function () {
         \Log::error('Failed to fetch feed posts');
