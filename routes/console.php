@@ -7,9 +7,8 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-
-Schedule::command('fetch:feed-posts')
-    ->twiceDaily()
+Schedule::command('feeds:fetch-posts', ['--batch' => 50])
+    ->everyMinute()
     ->withoutOverlapping()
     ->onFailure(function () {
         \Log::error('Failed to fetch feed posts');

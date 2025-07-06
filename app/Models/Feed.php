@@ -64,4 +64,39 @@ class Feed extends Model
 
         return $feeds;
     }
+
+    public function fetchPosts()
+    {
+        $web = new PHPScraper();
+        $rss = $web->rssRaw($this->url);
+
+        if (empty($rss) || empty($rss[0]['channel'])) {
+            return; // No valid RSS feed found
+        }
+
+        foreach ($rss[0]['channel']['item'] as $item) {
+            $guid = $item['guid'] ?? $item['link'] ?? null;
+            if (!$guid) {
+                continue; // Skip if no GUID or link
+            }
+
+            // Only create if not already exists
+            $exists = FeedPost::where('feed_id', $this->id)
+                ->where('guid', $guid)
+                ->exists();
+
+            if (!$exists) {
+                FeedPost::create([
+                    'feed_id' => $this->id,
+                    'guid' => $guid,
+                    'title' => $item['title'] ?? '',
+                    'link' => $item['link'] ?? '',
+                    'description' => $item['description'] ?? '',
+                    'author' => $item['author'] ?? '',
+                    'categories' => isset($item['category']) ? implode(',', (array) $item['category']) : null,
+                    'published_at' => isset($item['pubDate']) ? \Carbon\Carbon::parse($item['pubDate']) : null,
+                ]);
+            }
+        }
+    }
 }
