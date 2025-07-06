@@ -33,7 +33,17 @@ class FetchFeedPosts implements ShouldQueue
     {
         foreach ($this->feeds as $feed) {
             if ($feed instanceof Feed) {
-                $feed->fetchPosts();
+                try {
+
+                    $feed->fetchPosts();
+                } catch (\Exception $e) {
+                    // Handle any exceptions that occur during fetching
+                    \Log::error('Error fetching posts for feed', [
+                        'feed_id' => $feed->id,
+                        'error' => $e->getMessage(),
+                    ]);
+                    continue;
+                }
             } else {
                 // Handle the case where the feed is not an instance of Feed
                 // This could be logging, throwing an exception, etc.
