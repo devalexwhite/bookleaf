@@ -24,13 +24,13 @@ class StoreBookmarkRequest extends FormRequest
     {
         return [
             'url' => 'required|max:1024|url:http,https',
-            'image_url' => 'max:1024|url:http,https',
-            'description' => 'max:200',
-            'author' => 'max:200',
-            'name' => 'max:200',
-            'notes' => 'max:1024',
-            'tags' => 'max:1024',
-            'folder' => 'max:100',
+            'image_url' => 'max:1024|url:http,https|nullable',
+            'description' => 'max:200|nullable',
+            'author' => 'max:200|nullable',
+            'name' => 'max:200|nullable',
+            'notes' => 'max:1024|nullable',
+            'tags' => 'max:1024|nullable',
+            'folder' => 'max:100|nullable',
         ];
     }
 }

@@ -55,6 +55,15 @@
                                 <a href="{{ $bookmark->url }}" target="_blank" class="flex-1">
 
                                     <div>{{ $bookmark->name ?? Uri::of($bookmark->url)->host() }}</div>
+                                    @php $lastUpdate = $bookmark->lastFeedUpdate() @endphp
+                                    @if ($lastUpdate)
+                                        <div>
+                                            <a class="text-xs opacity-60 btn btn-link p-0 m-0 btn-xs" href="{{ $lastUpdate->link }}"
+                                                target="_blank">
+                                                Last updated {{ $lastUpdate->published_at->diffForHumans() }}
+                                            </a>
+                                        </div>
+                                    @endif
                                     <div class="mt-1 text-xs font-semibold opacity-60">
                                         {{ $bookmark->notes ?? $bookmark->description }}
                                     </div>
@@ -62,7 +71,10 @@
 
                             </div>
                         </div>
-                        <button class="btn mt-2 md:btn-sm btn-xs md:mt-0 btn-square btn-ghost">
+                        <button class="btn mt-2 md:btn-sm btn-xs md:mt-0 btn-square btn-ghost"
+                            hx-confirm="Are you sure you wish to delete this bookmark?" hx-target="#bookmark-list"
+                            hx-swap="outerHTML" hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'
+                            hx-delete="{{ route("bookmarks.destroy", ['bookmark' => $bookmark, 'view' => $view]) }}">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-4">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -104,6 +116,15 @@
                                 <h2 class="card-title">
                                     {{ $bookmark->name ?? Uri::of($bookmark->url)->host() }}
                                 </h2>
+                                @php $lastUpdate = $bookmark->lastFeedUpdate() @endphp
+                                @if ($lastUpdate)
+                                    <div>
+                                        <a class="text-xs opacity-60 btn btn-link p-0 btn-xs" href="{{ $lastUpdate->link }}"
+                                            target="_blank">
+                                            Last updated {{ $lastUpdate->published_at->diffForHumans() }}
+                                        </a>
+                                    </div>
+                                @endif
                                 <p>{{ $bookmark->notes ?? $bookmark->description }}</p>
                                 <div class="card-actions justify-start my-1">
                                     @foreach ($bookmark->tags as $tag)
@@ -123,7 +144,10 @@
                                         </svg>
                                         Visit
                                     </a>
-                                    <button class="btn btn-ghost">
+                                    <button class="btn btn-ghost" hx-confirm="Are you sure you wish to delete this bookmark?"
+                                        hx-target="#bookmark-list" hx-swap="outerHTML"
+                                        hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'
+                                        hx-delete="{{ route("bookmarks.destroy", ['bookmark' => $bookmark, 'view' => $view]) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                             stroke="currentColor" class="size-4">
                                             <path stroke-linecap="round" stroke-linejoin="round"
