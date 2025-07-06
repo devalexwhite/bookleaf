@@ -30,7 +30,12 @@ class DiscoverRSSFeeds extends Command
         $bookmarks = Bookmark::all();
 
         foreach ($bookmarks as $bookmark) {
-            Feed::discoverAndCreate($bookmark);
+            try {
+                Feed::discoverAndCreate($bookmark);
+            } catch (\Exception $e) {
+                $this->error("Failed to discover feeds for bookmark ID {$bookmark->id}: " . $e->getMessage());
+                continue; // Skip to the next bookmark if an error occurs
+            }
         }
 
         $this->info('RSS feeds discovered and created successfully.');
