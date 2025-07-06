@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\FetchFeedPosts;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,7 +29,11 @@ class Bookmark extends Model
     protected static function booted()
     {
         static::created(function ($bookmark) {
-            \App\Models\Feed::discoverAndCreate($bookmark);
+            $discoveredFeeds = Feed::discoverAndCreate($bookmark);
+
+            if ($discoveredFeeds != null && count($discoveredFeeds) > 0) {
+                FetchFeedPosts::dispatch(collect($discoveredFeeds)->pluck('id')->toArray());
+            }
         });
     }
 
