@@ -58,7 +58,8 @@
                                     @php $lastUpdate = $bookmark->lastFeedUpdate() @endphp
                                     @if ($lastUpdate)
                                         <div>
-                                            <a class="text-xs btn btn-link p-0 m-0 btn-xs" href="{{ $lastUpdate->link }}"
+                                            <a data-tip="{{ $lastUpdate->title }}"
+                                                class="tooltip text-xs btn btn-link p-0 m-0 btn-xs" href="{{ $lastUpdate->link }}"
                                                 target="_blank">
                                                 Last updated {{ $lastUpdate->published_at->diffForHumans() }}
                                             </a>
@@ -119,7 +120,8 @@
                                 @php $lastUpdate = $bookmark->lastFeedUpdate() @endphp
                                 @if ($lastUpdate)
                                     <div>
-                                        <a class="text-xs btn btn-link p-0 btn-xs" href="{{ $lastUpdate->link }}" target="_blank">
+                                        <a data-tip="{{ $lastUpdate->title }}" class="tooltip text-xs btn btn-link p-0 btn-xs"
+                                            href="{{ $lastUpdate->link }}" target="_blank">
                                             Last updated {{ $lastUpdate->published_at->diffForHumans() }}
                                         </a>
                                     </div>
