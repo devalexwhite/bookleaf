@@ -62,7 +62,10 @@
 
                             </div>
                         </div>
-                        <button class="btn mt-2 md:btn-sm btn-xs md:mt-0 btn-square btn-ghost">
+                        <button class="btn mt-2 md:btn-sm btn-xs md:mt-0 btn-square btn-ghost"
+                            hx-confirm="Are you sure you wish to delete this bookmark?" hx-target="#bookmark-list"
+                            hx-swap="outerHTML" hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'
+                            hx-delete="{{ route("bookmarks.destroy", ['bookmark' => $bookmark, 'view' => $view]) }}">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-4">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -123,7 +126,10 @@
                                         </svg>
                                         Visit
                                     </a>
-                                    <button class="btn btn-ghost">
+                                    <button class="btn btn-ghost" hx-confirm="Are you sure you wish to delete this bookmark?"
+                                        hx-target="#bookmark-list" hx-swap="outerHTML"
+                                        hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'
+                                        hx-delete="{{ route("bookmarks.destroy", ['bookmark' => $bookmark, 'view' => $view]) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                             stroke="currentColor" class="size-4">
                                             <path stroke-linecap="round" stroke-linejoin="round"
