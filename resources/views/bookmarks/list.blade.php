@@ -8,7 +8,7 @@
         'bg-linear-to-r from-amber-200 via-orange-400 to-red-600',
     ];
 @endphp
-<div id="bookmark-list" class="max-w-6xl mx-auto px-6 py-3">
+<div id="bookmark-list" class="max-w-6xl mx-auto px-6 py-3 pb-16">
     <div class="flex flex-col-reverse gap-8 md:gap-0 md:flex-row items-center justify-between w-full mb-10">
         <div class="join">
             <button hx-get="{{ route('bookmarks.index', ['view' => 'card']) }}" hx-target="#bookmark-list"
