@@ -117,8 +117,8 @@ class Bookmark extends Model
         );
     }
 
-    public function lastFeedUpdate(): ?\Carbon\Carbon
+    public function lastFeedUpdate(): ?FeedPost
     {
-        return $this->feedPosts()->latest('published_at')->value('published_at');
+        return $this->feedPosts()->latest('published_at')->first();
     }
 }

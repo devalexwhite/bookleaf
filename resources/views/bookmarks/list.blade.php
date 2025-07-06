@@ -57,8 +57,11 @@
                                     <div>{{ $bookmark->name ?? Uri::of($bookmark->url)->host() }}</div>
                                     @php $lastUpdate = $bookmark->lastFeedUpdate() @endphp
                                     @if ($lastUpdate)
-                                        <div class="text-xs opacity-60">
-                                            Last updated {{ $lastUpdate->diffForHumans() }}
+                                        <div>
+                                            <a class="text-xs opacity-60 btn btn-link p-0 m-0 btn-xs" href="{{ $lastUpdate->link }}"
+                                                target="_blank">
+                                                Last updated {{ $lastUpdate->published_at->diffForHumans() }}
+                                            </a>
                                         </div>
                                     @endif
                                     <div class="mt-1 text-xs font-semibold opacity-60">
@@ -115,8 +118,11 @@
                                 </h2>
                                 @php $lastUpdate = $bookmark->lastFeedUpdate() @endphp
                                 @if ($lastUpdate)
-                                    <div class="text-xs opacity-60">
-                                        Last updated {{ $lastUpdate->diffForHumans() }}
+                                    <div>
+                                        <a class="text-xs opacity-60 btn btn-link p-0 btn-xs" href="{{ $lastUpdate->link }}"
+                                            target="_blank">
+                                            Last updated {{ $lastUpdate->published_at->diffForHumans() }}
+                                        </a>
                                     </div>
                                 @endif
                                 <p>{{ $bookmark->notes ?? $bookmark->description }}</p>
