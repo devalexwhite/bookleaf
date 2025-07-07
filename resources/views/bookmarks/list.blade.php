@@ -48,7 +48,7 @@
                         <div class="flex flex-row w-full flex-1">
                             @if ($bookmark->image_url && trim($bookmark->image_url) != "")
                                 <div class="mr-2">
-                                    <img class="size-10 rounded-box" src="{{ $bookmark->image_url }}" />
+                                    <img class="size-10 rounded-box object-cover" src="{{ $bookmark->image_url }}" />
                                 </div>
                             @endif
                             <div class="flex-1 flex-col flex">
